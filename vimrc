@@ -26,6 +26,10 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'koron/nyancat-vim'
 
+"Auto vimscript reload for development
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-reload'
+
 "Don't want to overwrite this, might use pathogen instead
 set rtp+=~/.vim/bundle/git-off-my-lawn
 "Bundle 'FriedSock/git-off-my-lawn'
