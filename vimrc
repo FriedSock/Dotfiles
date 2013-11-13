@@ -14,11 +14,21 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'ervandew/supertab'
 Bundle 'kien/ctrlp.vim'
+
+"Colour schemes
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'sjl/badwolf'
+
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-rvm'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'chreekat/vim-paren-crosshairs'
+Bundle 'koron/nyancat-vim'
+
+"Don't want to overwrite this, might use pathogen instead
+set rtp+=~/.vim/bundle/git-off-my-lawn
+"Bundle 'FriedSock/git-off-my-lawn'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SENSIBLE DEFAULTS, MOSTLY COMING FROM JANUS
@@ -108,9 +118,9 @@ autocmd FileType {c,objc} setlocal shiftwidth=4 tabstop=4 sts=4
 " MAPPINGS
 """"""""""
 
-" Make :W do the same as :w
 command! W :w
 command! Wq :wq
+command! Q :q
 
 " Hit return to clear search highlighting
 noremap <cr> :nohlsearch<cr>
@@ -142,9 +152,9 @@ set pastetoggle=<F9>
 " COLOURS
 """""""""
 
-set t_Co=256            " Use all 256 colours
-set background=dark     " Dark terminal background
-color solarized         " Use the solarized colour theme
+set t_Co=256                              " Use all 256 colours
+color badwolf                             " Use the badwolf colour theme
+highlight LineNr ctermbg=236 ctermfg=249
 
 """"""""""""""""""""
 " MISC CONFIGURATION
