@@ -22,6 +22,8 @@ Bundle 'sjl/badwolf'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-rvm'
+Bundle 'tpope/vim-cucumber'
+
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'koron/nyancat-vim'
