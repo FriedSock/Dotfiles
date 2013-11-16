@@ -94,7 +94,7 @@ set directory=~/.vim_temp,/tmp
 " SET FILE TYPES FOR VARIOUS EXTENSIONS
 """""""""""""""""""""""""""""""""""""""
 
-filetype on                       " Enable filetype detection
+filetype on                       " Enable filetype detectio
 filetype indent on                " Enable filetype-specific indenting
 filetype plugin on                " Enable filetype-specific plugins
 
@@ -140,27 +140,13 @@ noremap <c-l> <c-w>l
 " Ctrl + L outputs a hashrocket in insert mode
 imap <c-l> <space>=><space>
 
-" <leader>= resizes all windows
-map <leader>= <c-w>=
-
-cnoremap %% <c-r>=expand('%:h').'/'<cr>
-
-" <leader>e edits a file in the current path
-map <leader>e :edit %%
-
-" <leader>G opens the Git status window
-map <leader>G :Gstatus<cr>
-
-" Use F9 to toggle between paste and nopaste
-set pastetoggle=<F9>
-
 """""""""
 " COLOURS
 """""""""
 
 set t_Co=256                              " Use all 256 colours
 color badwolf                             " Use the badwolf colour theme
-highlight LineNr ctermbg=236 ctermfg=249
+highlight LineNr ctermbg=236 ctermfg=249  " Give linenumbers a different background
 
 """"""""""""""""""""
 " MISC CONFIGURATION
@@ -180,16 +166,7 @@ set statusline=%f\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]%y%h%m%r%=%c,%l/%L\ %P
 " CTRLP CUSTOM SETTINGS
 """""""""""""""""""""""
 
-" Set up a bunch of <leader> key mappings for common Ruby/Rails directories
-map <leader>gv :CtrlP app/views<cr>
-map <leader>gc :CtrlP app/controllers<cr>
-map <leader>gm :CtrlP app/models<cr>
-map <leader>gh :CtrlP app/helpers<cr>
-map <leader>gl :CtrlP lib<cr>
-map <leader>gp :CtrlP public<cr>
 map <leader>f :CtrlP<cr>
-map <leader>F :CtrlP %%<cr>
-map <leader>cc :CtrlPClearCache<cr>\|:CtrlP<cr>
 
 " List files from top to bottom in CtrlP
 let g:ctrlp_match_window_reversed = 0
@@ -224,62 +201,6 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-""""""""""""""""""""""""""""""""""""""""""""""""
-" PROMOTE VARIABLE TO RSPEC LET (GARY BERNHARDT)
-""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! PromoteToLet()
-  :normal! dd
-  " :exec '?^\s*it\>'
-  :normal! P
-  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
-  :normal ==
-endfunction
-:command! PromoteToLet :call PromoteToLet()
-:map <leader>p :PromoteToLet<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" MOVE WINDOW TO PREVIOUS/NEXT TAB
-" http://vim.wikia.com/wiki/Move_current_window_between_tabs
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! MoveToPrevTab()
-  if tabpagenr('$') == 1 && winnr('$') == 1
-    return
-  endif
-  let l:tab_nr = tabpagenr('$')
-  let l:cur_buf = bufnr('%')
-  if tabpagenr() != 1
-    close!
-    if l:tab_nr == tabpagenr('$')
-      tabprev
-    endif
-    vsp
-  else
-    close!
-    exe "0tabnew"
-  endif
-  exe "b".l:cur_buf
-endfunc
-
-function! MoveToNextTab()
-  if tabpagenr('$') == 1 && winnr('$') == 1
-    return
-  endif
-  let l:tab_nr = tabpagenr('$')
-  let l:cur_buf = bufnr('%')
-  if tabpagenr() < tab_nr
-    close!
-    if l:tab_nr == tabpagenr('$')
-      tabnext
-    endif
-    vsp
-  else
-    close!
-    tabnew
-  endif
-  exe "b".l:cur_buf
-endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " TOGGLE BETWEEN RELATIVE AND ABSOLUTE LINE NUMBERS
