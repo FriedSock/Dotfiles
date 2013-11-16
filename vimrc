@@ -140,6 +140,35 @@ noremap <c-l> <c-w>l
 " Ctrl + L outputs a hashrocket in insert mode
 imap <c-l> <space>=><space>
 
+" Swap : and ; to make colon commands easier to type
+
+nnoremap  ;  :
+
+" Swap v and CTRL-V, because Block mode is more useful that Visual mode
+
+nnoremap    v   <C-V>
+nnoremap <C-V>     v
+
+vnoremap    v   <C-V>
+vnoremap <C-V>     v
+
+
+" This rewires n and N to do the highlighing...
+nnoremap <silent> n   n:call HLNext(0.4)<cr>
+nnoremap <silent> N   N:call HLNext(0.4)<cr>
+
+" OR ELSE just highlight the match in blue...
+function! HLNext (blinktime)
+  let [bufnum, lnum, col, off] = getpos('.')
+  let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+  let target_pat = '\c\%#'.@/
+  let ring = matchadd('StatusLine', target_pat, 101)
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  call matchdelete(ring)
+  redraw
+endfunction
+
 """""""""
 " COLOURS
 """""""""
@@ -215,3 +244,5 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+
+
