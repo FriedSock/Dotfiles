@@ -63,7 +63,7 @@ set list                          " Show invisible characters
 
 set listchars=""                  " Reset listchars
 set listchars=tab:\ \             " Display a tab as "  "
-set listchars+=trail:.            " Display trailing whitespace as "."
+set listchars+=trail:🐀            " Display trailing whitespace as 🐀
 set listchars+=extends:>          " Show ">" at the end of a wrapping line
 set listchars+=precedes:<         " Show "<" at the beginning of a wrapping line
 
@@ -251,5 +251,3 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
-
-
