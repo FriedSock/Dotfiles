@@ -36,6 +36,11 @@ Bundle 'xolox/vim-reload'
 set rtp+=~/.vim/bundle/git-off-my-lawn
 "Bundle 'FriedSock/git-off-my-lawn'
 
+augroup VimReload
+autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SENSIBLE DEFAULTS, MOSTLY COMING FROM JANUS
 " https://github.com/carlhuda/janus/blob/master/janus/vim/core/before/plugin/settings.vim
@@ -46,7 +51,7 @@ set ruler                         " Display line and column number
 
 syntax enable                     " Enable syntax highlighting
 set encoding=utf-8                " Use UTF-8 by default
-set backspace=indent,eol,start  " Backspace through everything
+set backspace=indent,eol,start    " Backspace through everything
 
 set nowrap                        " Don't wrap long lines
 set tabstop=2                     " A tab is two spaces long
@@ -152,6 +157,8 @@ nnoremap <C-V>     v
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
+
+map <leader>v :edit $MYVIMRC<cr>
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
