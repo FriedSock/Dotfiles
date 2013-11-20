@@ -4,3 +4,9 @@
 [user]
 	name = Jack Bracewell
 	email = jbtwentythree@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = true
+[help]
+	autocorrect = 5
