@@ -32,6 +32,8 @@ Bundle 'koron/nyancat-vim'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-reload'
 
+Bundle 'trapd00r/vimpoint'
+
 "Don't want to overwrite this, might use pathogen instead
 set rtp+=~/.vim/bundle/git-off-my-lawn
 "Bundle 'FriedSock/git-off-my-lawn'
@@ -63,7 +65,7 @@ set list                          " Show invisible characters
 
 set listchars=""                  " Reset listchars
 set listchars=tab:\ \             " Display a tab as "  "
-set listchars+=trail:🐀            " Display trailing whitespace as 🐀
+set listchars+=trail:🔥            " Display trailing whitespace as 🔥
 set listchars+=extends:>          " Show ">" at the end of a wrapping line
 set listchars+=precedes:<         " Show "<" at the beginning of a wrapping line
 
@@ -114,16 +116,11 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,*.ru,*.rak
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} set ft=markdown | call s:setupWrapping()
 au BufRead,BufNewFile *.json set ft=javascript
 au BufRead,BufNewFile *.scss set filetype=scss
+au BufRead,BufNewFile *.vimrc.vpe set ft=vim
 
 " Remember last location in a file, unless it's a git commit message
 au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
   \| exe "normal! g`\"" | endif
-
-""""""""""""""""""""""""""""""""""""""""
-" FILETYPE-SPECIFIC INDENTATION SETTINGS
-""""""""""""""""""""""""""""""""""""""""
-
-autocmd FileType {c,objc} setlocal shiftwidth=4 tabstop=4 sts=4
 
 """"""""""
 " MAPPINGS
@@ -146,18 +143,15 @@ noremap <c-l> <c-w>l
 imap <c-l> <space>=><space>
 
 " Swap : and ; to make colon commands easier to type
-
 nnoremap  ;  :
 
 " Swap v and CTRL-V, because Block mode is more useful that Visual mode
-
 nnoremap    v   <C-V>
 nnoremap <C-V>     v
-
 vnoremap    v   <C-V>
 vnoremap <C-V>     v
 
-
+" Open vimrc more easily
 map <leader>v :edit $MYVIMRC<cr>
 
 " This rewires n and N to do the highlighing...
