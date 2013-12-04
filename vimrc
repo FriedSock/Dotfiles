@@ -65,7 +65,8 @@ set list                          " Show invisible characters
 
 set listchars=""                  " Reset listchars
 set listchars=tab:\ \             " Display a tab as "  "
-set listchars+=trail:🔥            " Display trailing whitespace as 🔥
+set listchars+=trail:🔲            " Display trailing whitespace as 🔲
+
 set listchars+=extends:>          " Show ">" at the end of a wrapping line
 set listchars+=precedes:<         " Show "<" at the beginning of a wrapping line
 
@@ -76,9 +77,6 @@ set smartcase                     " (Unless they contain a capital letter)
 
 set wildmenu                      " Sensible, powerful tab completion
 set wildmode=list:longest,full    "
-
-set mouse=a
-set ttymouse=xterm2
 
 """"""""""""""""""""""
 " FILE TYPES TO IGNORE
@@ -101,7 +99,7 @@ set directory=~/.vim_temp,/tmp
 " SET FILE TYPES FOR VARIOUS EXTENSIONS
 """""""""""""""""""""""""""""""""""""""
 
-filetype on                       " Enable filetype detectio
+filetype on                       " Enable filetype detection
 filetype indent on                " Enable filetype-specific indenting
 filetype plugin on                " Enable filetype-specific plugins
 
@@ -154,6 +152,14 @@ vnoremap <C-V>     v
 " Open vimrc more easily
 map <leader>v :edit $MYVIMRC<cr>
 
+" I will finally learn HJKL!
+inoremap <Up> <NOP>
+inoremap <Up> <NOP>
+inoremap <Up> <NOP>
+inoremap <Up> <NOP>
+k
+
+inoremap <esc> <nop>
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
