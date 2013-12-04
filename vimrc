@@ -153,13 +153,20 @@ vnoremap <C-V>     v
 map <leader>v :edit $MYVIMRC<cr>
 
 " I will finally learn HJKL!
-inoremap <Up> <NOP>
-inoremap <Up> <NOP>
-inoremap <Up> <NOP>
-inoremap <Up> <NOP>
-k
+inoremap <Up> <nop>
+nnoremap <Up> <nop>
+inoremap <Down> <nop>
+nnoremap <Down> <nop>
+inoremap <Right> <nop>
+nnoremap <Right> <nop>
+inoremap <Left> <nop>
+nnoremap <Left> <nop>
 
-inoremap <esc> <nop>
+nnoremap L $
+nnoremap H ^
+
+inoremap jk <esc>
+
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
