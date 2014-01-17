@@ -257,3 +257,40 @@ nnoremap <C-n> :call NumberToggle()<cr>
 
 "Todo - make it tell me if there was a problem
 map <leader>p :! pdflatex %<cr><cr>
+
+"Comment many lines at once"
+nnoremap H :set operatorfunc=HashOperator<cr>g@
+vnoremap H :<c-u>call HashOperator(visualmode())<cr>
+
+function! HashOperator(type)
+  call CommentOperator(a:type, '#')
+endfunction
+
+function! CommentOperator(type, cmt)
+  if a:type ==# 'v'
+    if Commented(a:type, a:cmt)
+      "NOTE: This will only work if all comments are in the same column
+      execute "normal! `<k$/" . a:cmt .  "\<cr>\<c-v>`>k$/" . a:cmt . "\<cr>d"
+      noh
+    else
+      let exp = &indentexpr
+      setlocal indentexpr=""
+      execute "normal! `<0\<c-v>`>0I" . a:cmt
+      execute "setlocal indentexpr=" . exp
+    end
+  elseif a:type ==# 'char'
+  elseif a:type ==# 'line'
+    execute "normal! `[0\<c-v>`]0I"
+  endif
+endfunction
+
+function! Commented(type, cmt)
+  if a:type ==# 'v'
+    let b:hash = []
+    let start = line("'<")
+    let end = line("'>")
+    execute 'silent ' . start . ',' . end . " g/^\\s*" . a:cmt "/let b:hash = b:hash + [line('.')]"
+    noh
+    return range(start, end) == b:hash
+  endif
+endfunction
