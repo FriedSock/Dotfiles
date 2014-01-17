@@ -25,6 +25,7 @@ Bundle 'tpope/vim-rvm'
 Bundle 'tpope/vim-cucumber'
 
 Bundle 'vim-ruby/vim-ruby'
+Bundle 'vim-scripts/fish-syntax'
 Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'koron/nyancat-vim'
 
@@ -143,12 +144,6 @@ imap <c-l> <space>=><space>
 " Swap : and ; to make colon commands easier to type
 nnoremap  ;  :
 
-" Swap v and CTRL-V, because Block mode is more useful that Visual mode
-nnoremap    v   <C-V>
-nnoremap <C-V>     v
-vnoremap    v   <C-V>
-vnoremap <C-V>     v
-
 " Open vimrc more easily
 map <leader>v :edit $MYVIMRC<cr>
 
@@ -166,6 +161,7 @@ nnoremap L $
 nnoremap H ^
 
 inoremap jk <esc>
+inoremap <esc> <nop>
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -258,3 +254,6 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+
+"Todo - make it tell me if there was a problem
+map <leader>p :! pdflatex %<cr><cr>
