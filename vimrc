@@ -163,6 +163,10 @@ nnoremap H ^
 inoremap jk <esc>
 inoremap <esc> <nop>
 
+" Abbreviations
+abbreviate recieve receive
+abbreviate colleciton collection
+
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
 nnoremap <silent> N   N:call HLNext(0.4)<cr>
