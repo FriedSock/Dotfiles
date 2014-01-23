@@ -157,6 +157,9 @@ nnoremap <Right> <nop>
 inoremap <Left> <nop>
 nnoremap <Left> <nop>
 
+"Fucking sick of recording
+nnoremap q <nop>
+
 nnoremap L $
 nnoremap H ^
 
