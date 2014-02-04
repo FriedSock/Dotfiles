@@ -152,23 +152,24 @@ inoremap <Up> <nop>
 nnoremap <Up> <nop>
 inoremap <Down> <nop>
 nnoremap <Down> <nop>
-inoremap <Right> <nop>
-nnoremap <Right> <nop>
-inoremap <Left> <nop>
-nnoremap <Left> <nop>
+inoremap <Right> :tabnext<cr>
+nnoremap <Right> :tabnext<cr>
+inoremap <Left> :tabprevious<cr>
+nnoremap <Left> :tabprevious<cr>
 
 "Fucking sick of recording
 nnoremap q <nop>
 
-nnoremap L $
-nnoremap H ^
+nnoremap L :tabnext<cr>
+nnoremap H :tabprevious<cr>
 
 inoremap jk <esc>
 inoremap <esc> <nop>
 
-" Abbreviations
+" I can't spell or type
 abbreviate recieve receive
 abbreviate colleciton collection
+abbreviate chloropleth choropleth
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.4)<cr>
@@ -264,10 +265,12 @@ nnoremap <C-n> :call NumberToggle()<cr>
 
 "Todo - make it tell me if there was a problem
 map <leader>p :! pdflatex %<cr><cr>
+map <leader>g :! gnuplot %<cr><cr>
+map <leader>r :! rake %<cr>
 
 "Comment many lines at once"
-nnoremap H :set operatorfunc=HashOperator<cr>g@
-vnoremap H :<c-u>call HashOperator(visualmode())<cr>
+nnoremap # :set operatorfunc=HashOperator<cr>g@
+vnoremap # :<c-u>call HashOperator(visualmode())<cr>
 
 function! HashOperator(type)
   call CommentOperator(a:type, '#')
