@@ -2,7 +2,6 @@ set fish_theme fishface
 
 set fish_plugins git
 
-
 #function fish_prompt
 #  function _git_branch_name
 #    echo (command git symbolic-ref HEAD ^/dev/null | sed -e 's|^refs/heads/||')
@@ -71,3 +70,10 @@ alias 'gps' 'git push '
 alias 'gpl' 'git pull '
 alias 'gco' 'git checkout '
 alias 'be' 'bundle exec '
+alias 'ob' 'ruby /Users/jackbracewell/Code/git-off-my-lawn/tools/observe_history.rb'
+alias 'gr' 'ruby /Users/jackbracewell/Code/git-off-my-lawn/plugin/markov/harvest.rb'
+alias 'sm' 'ruby /Users/jackbracewell/Code/ctrlp-similar/script/item_item.rb'
+alias 'tst' 'ruby /Users/jackbracewell/Code/ctrlp-similar/script/test.rb'
+alias 'gc' 'ruby /Users/jackbracewell/Code/ctrlp-similar/plugin/get_commit_files.sh'
+
+alias 'mvim' '~/Downloads/MacVim-snapshot-72/mvim'

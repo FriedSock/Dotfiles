@@ -3,11 +3,17 @@ let mapleader=","                 " Make , the leader key
 set nocompatible               " be iMproved
 filetype off                   " required!
 
+if has("gui_running")
+  set guioptions -=rL
+  "cd ~/Code
+endif
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
 " " required!
+
 Bundle 'gmarik/vundle'
 
 Bundle 'scrooloose/nerdtree'
@@ -23,26 +29,38 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-rvm'
 Bundle 'tpope/vim-cucumber'
+Bundle 'tpope/vim-dispatch'
 
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'vim-scripts/fish-syntax'
 Bundle 'chreekat/vim-paren-crosshairs'
 Bundle 'koron/nyancat-vim'
 
+"Bundle 'Valloric/YouCompleteMe'
+Bundle 'zhaocai/GoldenView.Vim'
+
 "Auto vimscript reload for development
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-reload'
 
 Bundle 'trapd00r/vimpoint'
+Bundle 'junegunn/goyo.vim'
 
 "Don't want to overwrite this, might use pathogen instead
-set rtp+=~/.vim/bundle/git-off-my-lawn
-"Bundle 'FriedSock/git-off-my-lawn'
+"set runtimepath+=~/.vim/bundle/smeargle
+"set runtimepath+=~/.vim/bundle/ctrlpsimilar
+Bundle 'FriedSock/smeargle'
+Bundle 'FriedSock/ctrlpsimilar'
+
+Bundle 'Shougo/vimproc.vim'
+Bundle 'uguu-org/vim-matrix-screensaver'
 
 augroup VimReload
 autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
+
+"set shellcmdflag=-ic
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SENSIBLE DEFAULTS, MOSTLY COMING FROM JANUS
@@ -133,10 +151,14 @@ command! Q :q
 noremap <cr> :nohlsearch<cr>
 
 " Move around splits with Ctrl + HJKL
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-h> <c-w>h
-noremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+let g:goldenview__enable_default_mapping = 0
+nnoremap <c-o>  :call GoldenView#Split()<cr>
+nnoremap <S-CR> :call GoldenView#SwitchMain()<cr>
 
 " Ctrl + L outputs a hashrocket in insert mode
 imap <c-l> <space>=><space>
@@ -156,9 +178,6 @@ inoremap <Right> :tabnext<cr>
 nnoremap <Right> :tabnext<cr>
 inoremap <Left> :tabprevious<cr>
 nnoremap <Left> :tabprevious<cr>
-
-"Fucking sick of recording
-nnoremap q <nop>
 
 nnoremap L :tabnext<cr>
 nnoremap H :tabprevious<cr>
@@ -192,7 +211,7 @@ endfunction
 """""""""
 
 set t_Co=256                              " Use all 256 colours
-color badwolf                             " Use the badwolf colour theme
+color grb256
 highlight LineNr ctermbg=236 ctermfg=249  " Give linenumbers a different background
 
 """"""""""""""""""""
@@ -209,6 +228,14 @@ set laststatus=2        " Show the statusline
 " filename [encoding,line-endings][filetype] ... col,row/total-rows Position
 set statusline=%f\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]%y%h%m%r%=%c,%l/%L\ %P
 
+""""""""""""""""""""""
+" SMEARGLE SETTINGS
+""""""""""""""""""""""
+let g:smeargle_colour_timeout = 1
+let g:smeargle_colouring_scheme = ''
+let g:smeargle_newline_term_colour = 22
+let g:smeargle_newline_gui_colour = '#110011'
+
 """""""""""""""""""""""
 " CTRLP CUSTOM SETTINGS
 """""""""""""""""""""""
@@ -223,6 +250,10 @@ let g:ctrlp_max_height = 30
 
 " CtrlP shouldn't manage the current directory
 let g:ctrlp_working_path_mode = 0
+
+"let g:ctrlp_extensions = ['sample']
+
+nnoremap <leader>s :CtrlPSimilar<cr>
 
 """""""""""""""""""
 " NERDTREE MAPPINGS
@@ -256,6 +287,7 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 function! NumberToggle()
   if(&relativenumber == 1)
     set number
+    set norelativenumber
   else
     set relativenumber
   endif
@@ -266,7 +298,7 @@ nnoremap <C-n> :call NumberToggle()<cr>
 "Todo - make it tell me if there was a problem
 map <leader>p :! pdflatex %<cr><cr>
 map <leader>g :! gnuplot %<cr><cr>
-map <leader>r :! rake %<cr>
+map <leader>r :! ruby %<cr><cr>
 
 "Comment many lines at once"
 nnoremap # :set operatorfunc=HashOperator<cr>g@
