@@ -3,41 +3,41 @@ let mapleader=","                 " Make , the leader key
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " " required!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'ervandew/supertab'
-Bundle 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'ervandew/supertab'
+Plugin 'kien/ctrlp.vim'
 
 "Colour schemes
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'sjl/badwolf'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'sjl/badwolf'
 
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-rvm'
-Bundle 'tpope/vim-cucumber'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-rvm'
+Plugin 'tpope/vim-cucumber'
 
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/fish-syntax'
-Bundle 'chreekat/vim-paren-crosshairs'
-Bundle 'koron/nyancat-vim'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-scripts/fish-syntax'
+Plugin 'chreekat/vim-paren-crosshairs'
+Plugin 'koron/nyancat-vim'
 
 "Auto vimscript reload for development
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-reload'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-reload'
 
-Bundle 'trapd00r/vimpoint'
+Plugin 'trapd00r/vimpoint'
+call vundle#end()
 
-"Don't want to overwrite this, might use pathogen instead
-set rtp+=~/.vim/bundle/git-off-my-lawn
-"Bundle 'FriedSock/git-off-my-lawn'
+Plugin 'FriedSock/smeargle'
+Plugin 'FriedSock/ctrlpsimilar'
 
 augroup VimReload
 autocmd!
