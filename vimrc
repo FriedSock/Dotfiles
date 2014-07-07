@@ -10,6 +10,11 @@ call vundle#begin()
 " " required!
 Plugin 'gmarik/vundle'
 
+if has("gui_running")
+  set guioptions -=rL
+  "cd ~/Code
+endif
+
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'ervandew/supertab'
@@ -23,7 +28,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-cucumber'
-
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/fish-syntax'
 Plugin 'chreekat/vim-paren-crosshairs'
@@ -43,6 +47,8 @@ augroup VimReload
 autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
+
+"set shellcmdflag=-ic
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SENSIBLE DEFAULTS, MOSTLY COMING FROM JANUS
@@ -133,10 +139,14 @@ command! Q :q
 noremap <cr> :nohlsearch<cr>
 
 " Move around splits with Ctrl + HJKL
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-h> <c-w>h
-noremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+let g:goldenview__enable_default_mapping = 0
+nnoremap <c-o>  :call GoldenView#Split()<cr>
+nnoremap <S-CR> :call GoldenView#SwitchMain()<cr>
 
 " Ctrl + L outputs a hashrocket in insert mode
 imap <c-l> <space>=><space>
@@ -156,9 +166,6 @@ inoremap <Right> :tabnext<cr>
 nnoremap <Right> :tabnext<cr>
 inoremap <Left> :tabprevious<cr>
 nnoremap <Left> :tabprevious<cr>
-
-"Fucking sick of recording
-nnoremap q <nop>
 
 nnoremap L :tabnext<cr>
 nnoremap H :tabprevious<cr>
@@ -192,7 +199,7 @@ endfunction
 """""""""
 
 set t_Co=256                              " Use all 256 colours
-color badwolf                             " Use the badwolf colour theme
+color badwolf
 highlight LineNr ctermbg=236 ctermfg=249  " Give linenumbers a different background
 
 """"""""""""""""""""
@@ -209,6 +216,14 @@ set laststatus=2        " Show the statusline
 " filename [encoding,line-endings][filetype] ... col,row/total-rows Position
 set statusline=%f\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]%y%h%m%r%=%c,%l/%L\ %P
 
+""""""""""""""""""""""
+" SMEARGLE SETTINGS
+""""""""""""""""""""""
+let g:smeargle_colour_timeout = 1
+let g:smeargle_colouring_scheme = ''
+let g:smeargle_newline_term_colour = 22
+let g:smeargle_newline_gui_colour = '#110011'
+
 """""""""""""""""""""""
 " CTRLP CUSTOM SETTINGS
 """""""""""""""""""""""
@@ -223,6 +238,10 @@ let g:ctrlp_max_height = 30
 
 " CtrlP shouldn't manage the current directory
 let g:ctrlp_working_path_mode = 0
+
+"let g:ctrlp_extensions = ['sample']
+
+nnoremap <leader>s :CtrlPSimilar<cr>
 
 """""""""""""""""""
 " NERDTREE MAPPINGS
@@ -256,6 +275,7 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 function! NumberToggle()
   if(&relativenumber == 1)
     set number
+    set norelativenumber
   else
     set relativenumber
   endif
@@ -266,7 +286,7 @@ nnoremap <C-n> :call NumberToggle()<cr>
 "Todo - make it tell me if there was a problem
 map <leader>p :! pdflatex %<cr><cr>
 map <leader>g :! gnuplot %<cr><cr>
-map <leader>r :! rake %<cr>
+map <leader>r :! ruby %<cr><cr>
 
 "Comment many lines at once"
 nnoremap # :set operatorfunc=HashOperator<cr>g@
