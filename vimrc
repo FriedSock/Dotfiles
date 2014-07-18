@@ -17,13 +17,11 @@ endif
 
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim'
-
-"Colour schemes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'sjl/badwolf'
-
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-rvm'
@@ -31,24 +29,24 @@ Plugin 'tpope/vim-cucumber'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'vim-scripts/fish-syntax'
 Plugin 'chreekat/vim-paren-crosshairs'
-Plugin 'koron/nyancat-vim'
-
-"Auto vimscript reload for development
+Plugin 'zhaocai/GoldenView.Vim'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-reload'
-
 Plugin 'trapd00r/vimpoint'
-call vundle#end()
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'mattn/flappyvird-vim'
+Plugin 'koron/nyancat-vim'
+Plugin 'uguu-org/vim-matrix-screensaver'
 
 Plugin 'FriedSock/smeargle'
 Plugin 'FriedSock/ctrlpsimilar'
+call vundle#end()
+
 
 augroup VimReload
 autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
-
-"set shellcmdflag=-ic
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SENSIBLE DEFAULTS, MOSTLY COMING FROM JANUS
@@ -72,7 +70,7 @@ set list                          " Show invisible characters
 
 set listchars=""                  " Reset listchars
 set listchars=tab:\ \             " Display a tab as "  "
-set listchars+=trail:🔲            " Display trailing whitespace as 🔲
+"set listchars+=trail:🔲            " Display trailing whitespace as 🔲
 
 set listchars+=extends:>          " Show ">" at the end of a wrapping line
 set listchars+=precedes:<         " Show "<" at the beginning of a wrapping line
