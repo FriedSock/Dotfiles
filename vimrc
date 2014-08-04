@@ -3,44 +3,45 @@ let mapleader=","                 " Make , the leader key
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
 " let Vundle manage Vundle
 " " required!
-Plugin 'gmarik/Vundle.vim'
 
 if has("gui_running")
   set guioptions -=rL
-  "cd ~/Code
 endif
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ervandew/supertab'
-Plugin 'kien/ctrlp.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'sjl/badwolf'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-rvm'
-Plugin 'tpope/vim-cucumber'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'vim-scripts/fish-syntax'
-Plugin 'chreekat/vim-paren-crosshairs'
-Plugin 'zhaocai/GoldenView.Vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-reload'
-Plugin 'trapd00r/vimpoint'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'mattn/flappyvird-vim'
-Plugin 'koron/nyancat-vim'
-Plugin 'uguu-org/vim-matrix-screensaver'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ervandew/supertab'
+Plug 'kien/ctrlp.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'sjl/badwolf'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rvm'
+Plug 'tpope/vim-cucumber'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/fish-syntax'
+Plug 'chreekat/vim-paren-crosshairs'
+Plug 'zhaocai/GoldenView.Vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-reload'
+Plug 'trapd00r/vimpoint'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'mattn/flappyvird-vim'
+Plug 'koron/nyancat-vim'
+Plug 'uguu-org/vim-matrix-screensaver'
+Plug 'leafo/moonscript-vim'
+Plug 'junegunn/vader.vim'
 
-Plugin 'FriedSock/smeargle'
-Plugin 'FriedSock/ctrlpsimilar'
-call vundle#end()
+Plug 'FriedSock/smeargle'
+Plug 'FriedSock/ctrlpsimilar'
+call plug#end()
 
 
 augroup VimReload
@@ -326,7 +327,7 @@ endfunction
 if &term =~ "xterm.*"
     let &t_ti = &t_ti . "\e[?2004h"
     let &t_te = "\e[?2004l" . &t_te
-    function XTermPasteBegin(ret)
+    function! XTermPasteBegin(ret)
         set pastetoggle=<Esc>[201~
         set paste
         return a:ret
