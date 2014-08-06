@@ -3,45 +3,45 @@ let mapleader=","                 " Make , the leader key
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
 " let Vundle manage Vundle
 " " required!
-Plugin 'gmarik/Vundle.vim'
 
 if has("gui_running")
   set guioptions -=rL
-  "cd ~/Code
 endif
 
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ervandew/supertab'
-Plugin 'kien/ctrlp.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'sjl/badwolf'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-rvm'
-Plugin 'tpope/vim-cucumber'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'vim-scripts/fish-syntax'
-Plugin 'chreekat/vim-paren-crosshairs'
-Plugin 'zhaocai/GoldenView.Vim'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-reload'
-Plugin 'trapd00r/vimpoint'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'mattn/flappyvird-vim'
-Plugin 'koron/nyancat-vim'
-Plugin 'uguu-org/vim-matrix-screensaver'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'ervandew/supertab'
+Plug 'kien/ctrlp.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'sjl/badwolf'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rvm'
+Plug 'tpope/vim-cucumber'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/fish-syntax'
+Plug 'chreekat/vim-paren-crosshairs'
+Plug 'zhaocai/GoldenView.Vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-reload'
+Plug 'trapd00r/vimpoint'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'mattn/flappyvird-vim'
+Plug 'koron/nyancat-vim'
+Plug 'uguu-org/vim-matrix-screensaver'
+Plug 'leafo/moonscript-vim'
+Plug 'junegunn/vader.vim'
 
-Plugin 'FriedSock/smeargle'
-Plugin 'FriedSock/ctrlpsimilar'
-call vundle#end()
+Plug 'FriedSock/smeargle'
+Plug 'FriedSock/ctrlpsimilar'
+call plug#end()
 
 
 augroup VimReload
@@ -186,14 +186,20 @@ abbreviate colleciton collection
 abbreviate chloropleth choropleth
 
 " This rewires n and N to do the highlighing...
-nnoremap <silent> n   n:call HLNext(0.4)<cr>
-nnoremap <silent> N   N:call HLNext(0.4)<cr>
+nnoremap <silent> n   n:call HLNext(0.1)<cr>
+nnoremap <silent> N   N:call HLNext(0.1)<cr>
 
 " OR ELSE just highlight the match in blue...
 function! HLNext (blinktime)
   let [bufnum, lnum, col, off] = getpos('.')
   let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
   let target_pat = '\c\%#'.@/
+  let ring = matchadd('StatusLine', target_pat, 101)
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  call matchdelete(ring)
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
   let ring = matchadd('StatusLine', target_pat, 101)
   redraw
   exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
