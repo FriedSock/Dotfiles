@@ -24,6 +24,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'sjl/badwolf'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-cucumber'
 Plugin 'vim-ruby/vim-ruby'
@@ -137,20 +138,28 @@ command! Q :q
 noremap <cr> :nohlsearch<cr>
 
 " Move around splits with Ctrl + HJKL
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+noremap <c-j> <c-w>j
+noremap <c-k> <c-w>k
+noremap <c-h> <c-w>h
+noremap <c-l> <c-w>l
+
+"
+noremap K k
+noremap J j
 
 let g:goldenview__enable_default_mapping = 0
-nnoremap <c-o>  :call GoldenView#Split()<cr>
-nnoremap <S-CR> :call GoldenView#SwitchMain()<cr>
+noremap <c-o>  :call GoldenView#Split()<cr>
+noremap <S-CR> :call GoldenView#SwitchMain()<cr>
 
 " Ctrl + L outputs a hashrocket in insert mode
 imap <c-l> <space>=><space>
 
 " Swap : and ; to make colon commands easier to type
 nnoremap  ;  :
+
+" visual line mode is better than visual mode
+noremap v V
+noremap V v
 
 " Open vimrc more easily
 map <leader>v :edit $MYVIMRC<cr>
@@ -214,6 +223,9 @@ set laststatus=2        " Show the statusline
 " filename [encoding,line-endings][filetype] ... col,row/total-rows Position
 set statusline=%f\ [%{strlen(&fenc)?&fenc:'none'},%{&ff}]%y%h%m%r%=%c,%l/%L\ %P
 
+" set _ as a word seperator
+set iskeyword-=_
+
 """"""""""""""""""""""
 " SMEARGLE SETTINGS
 """"""""""""""""""""""
@@ -237,7 +249,6 @@ let g:ctrlp_max_height = 30
 " CtrlP shouldn't manage the current directory
 let g:ctrlp_working_path_mode = 0
 
-"let g:ctrlp_extensions = ['sample']
 
 nnoremap <leader>s :CtrlPSimilar<cr>
 
@@ -247,6 +258,17 @@ nnoremap <leader>s :CtrlPSimilar<cr>
 
 " <leader>N to open and close NERDTree
 map <leader>N :NERDTreeToggle<cr>
+
+""""""""""""""""""""
+" UNIMPAIRED MAPPING
+""""""""""""""""""""
+" Bubble single lines
+nmap <Up> [e
+nmap <Down> ]e
+" Bubble multiple lines
+vmap <Up> [egv
+vmap <Down> ]egv
+
 
 """"""""""""""""""""""""""""""""""""""""
 " STRIP TRAILING WHITESPACE ON FILE SAVE
@@ -326,7 +348,7 @@ endfunction
 if &term =~ "xterm.*"
     let &t_ti = &t_ti . "\e[?2004h"
     let &t_te = "\e[?2004l" . &t_te
-    function XTermPasteBegin(ret)
+    function! XTermPasteBegin(ret)
         set pastetoggle=<Esc>[201~
         set paste
         return a:ret
