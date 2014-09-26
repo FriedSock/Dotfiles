@@ -38,6 +38,8 @@ Plug 'koron/nyancat-vim'
 Plug 'uguu-org/vim-matrix-screensaver'
 Plug 'leafo/moonscript-vim'
 Plug 'junegunn/vader.vim'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'ekalinin/Dockerfile.vim'
 
 Plug 'FriedSock/smeargle'
 Plug 'FriedSock/ctrlpsimilar'

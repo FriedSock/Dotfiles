@@ -3,10 +3,12 @@
 	default = tracking
 [user]
 	name = Jack Bracewell
-	email = jack.bracewell@unboxedconsulting.com
+	email = jbtwentythree@gmail.com
 [core]
 	editor = vim
 [color]
 	ui = true
 [help]
 	autocorrect = 5
+[pager]
+	diff = false
