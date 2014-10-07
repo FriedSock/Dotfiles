@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
 
 if has("gui_running")
   set guioptions -=rL
+  set guioptions -=e
 endif
 
 Plug 'scrooloose/nerdtree'
@@ -40,6 +41,8 @@ Plug 'leafo/moonscript-vim'
 Plug 'junegunn/vader.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
+Plug 'whatyouhide/vim-gotham'
+Plug 'bling/vim-airline'
 
 Plug 'FriedSock/smeargle'
 Plug 'FriedSock/ctrlpsimilar'
@@ -214,7 +217,7 @@ endfunction
 """""""""
 
 set t_Co=256                              " Use all 256 colours
-color badwolf
+colorscheme gotham
 highlight LineNr ctermbg=236 ctermfg=249  " Give linenumbers a different background
 
 """"""""""""""""""""
