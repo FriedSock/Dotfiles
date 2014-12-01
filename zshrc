@@ -53,21 +53,21 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH="/Users/jackbracewell/.rvm/gems/ruby-2.1.2/bin:/Users/jackbracewell/.rvm/gems/ruby-2.1.2@global/bin:/Users/jackbracewell/.rvm/rubies/ruby-2.1.2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/jackbracewell/.rvm/bin"
 
-bindkey -v
+#bindkey -v
 
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey "^?" backward-delete-char
+#bindkey -M viins 'jk' vi-cmd-mode
+#bindkey "^?" backward-delete-char
 
-function zle-line-init zle-keymap-select {
-    NORMAL="%{$fg_bold[blue]%} [% NORMAL]%  %{$reset_color%}"
-    INSERT="%{$fg_bold[green]%} [% INSERT]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$NORMAL}/(main|viins)/$INSERT} $EPS1"
-    zle reset-prompt
-}
+#function zle-line-init zle-keymap-select {
+#    NORMAL="%{$fg_bold[blue]%} [% NORMAL]%  %{$reset_color%}"
+#    INSERT="%{$fg_bold[green]%} [% INSERT]%  %{$reset_color%}"
+#    RPS1="${${KEYMAP/vicmd/$NORMAL}/(main|viins)/$INSERT} $EPS1"
+#    zle reset-prompt
+#}
 
-zle -N zle-line-init
-zle -N zle-keymap-select
-export KEYTIMEOUT=1
+#zle -N zle-line-init
+#zle -N zle-keymap-select
+#export KEYTIMEOUT=1
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
