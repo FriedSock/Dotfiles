@@ -75,7 +75,8 @@ set sts=2                         " Backspace deletes whole tabs at the end of a
 set list                          " Show invisible characters
 
 set listchars=""                  " Reset listchars
-set listchars=tab:\ \             " Display a tab as "  "
+"set listchars=tab:\ \             " Display a tab as "  "
+set listchars=tab:▸\ ,eol:¬
 "set listchars+=trail:🔲            " Display trailing whitespace as 🔲
 
 set listchars+=extends:>          " Show ">" at the end of a wrapping line
@@ -169,26 +170,14 @@ noremap V v
 " Open vimrc more easily
 map <leader>v :edit $MYVIMRC<cr>
 
-" I will finally learn HJKL!
-inoremap <Up> <nop>
-nnoremap <Up> <nop>
-inoremap <Down> <nop>
-nnoremap <Down> <nop>
-inoremap <Right> :tabnext<cr>
-nnoremap <Right> :tabnext<cr>
-inoremap <Left> :tabprevious<cr>
-nnoremap <Left> :tabprevious<cr>
-
-nnoremap L :tabnext<cr>
-nnoremap H :tabprevious<cr>
-
 inoremap jk <esc>
-inoremap <esc> <nop>
 
 " I can't spell or type
 abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
+abbreviate pry require 'pry'; binding.pry
+abbreviate dbg require 'debugger'; debugger
 
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.1)<cr>
@@ -201,13 +190,13 @@ function! HLNext (blinktime)
   let target_pat = '\c\%#'.@/
   let ring = matchadd('StatusLine', target_pat, 101)
   redraw
-  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  exec 'sleep ' . float2nr(a:blinktime * 800) . 'm'
   call matchdelete(ring)
   redraw
-  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  exec 'sleep ' . float2nr(a:blinktime * 100) . 'm'
   let ring = matchadd('StatusLine', target_pat, 101)
   redraw
-  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  exec 'sleep ' . float2nr(a:blinktime * 300) . 'm'
   call matchdelete(ring)
   redraw
 endfunction
@@ -225,7 +214,7 @@ highlight LineNr ctermbg=236 ctermfg=249  " Give linenumbers a different backgro
 """"""""""""""""""""
 
 set shell=/bin/bash     " Make Vim load bash environment (e.g. RVM)
-set timeoutlen=300      " Only wait 500ms before processing certain commands
+set timeoutlen=200      " Only wait 200ms before processing certain commands
 set showcmd             " Display incomplete commands
 set scrolloff=3         " Keep more lines when scrolling off the end of a buffer
 set laststatus=2        " Show the statusline
@@ -274,8 +263,8 @@ map <leader>N :NERDTreeToggle<cr>
 " UNIMPAIRED MAPPING
 """"""""""""""""""""
 " Bubble single lines
-nmap <Up> [e
-nmap <Down> ]e
+"nmap <Up> [e
+"nmap <Down> ]e
 " Bubble multiple lines
 vmap <Up> [egv
 vmap <Down> ]egv
@@ -296,7 +285,7 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+"autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -356,6 +345,8 @@ function! Commented(type, cmt)
   endif
 endfunction
 
+
+"Copy and pasting into terminal
 if &term =~ "xterm.*"
     let &t_ti = &t_ti . "\e[?2004h"
     let &t_te = "\e[?2004l" . &t_te
