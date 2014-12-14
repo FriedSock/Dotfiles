@@ -1,4 +1,3 @@
-
 "     /)/)/) /).-')
 "   ////((.'_.--'   .(\(\(\                   n/(/.')_         .
 "  ((((_/ .'      .-`)))))))                  `-._ ('.'        \`(\
@@ -23,13 +22,12 @@
 "______.------.______/ |_/ |_/_|_/// |__| \\__________// |--( \\---------
 "                    '-' '-'       '-'    `-`          '-'    `-`
 
-" GUI {{{
+" GUI {{{1
 if has("gui_running")
   set guioptions -=rL
   set guioptions -=e
 endif
-"}}}
-" Plugins {{{
+" Plugins {{{1
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
@@ -37,6 +35,8 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
 Plug 'tpope/vim-surround'
@@ -46,7 +46,6 @@ Plug 'tpope/vim-cucumber'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
-Plug 'zhaocai/GoldenView.Vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-reload'
 Plug 'trapd00r/vimpoint'
@@ -55,23 +54,24 @@ Plug 'mattn/flappyvird-vim'
 Plug 'koron/nyancat-vim'
 Plug 'uguu-org/vim-matrix-screensaver'
 Plug 'leafo/moonscript-vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'whatyouhide/vim-gotham'
 Plug 'bling/vim-airline'
+Plug 'jszakmeister/vim-togglecursor'
 
 Plug 'FriedSock/smeargle'
 Plug 'FriedSock/ctrlpsimilar'
 call plug#end()
 
-"}}}
-" Folding {{{
-set fdm=marker
+" Folding {{{1
+set foldmethod=marker
 nnoremap <Space> za
 vnoremap <Space> za
-"}}}
-" Random settings {{{
+" Random settings {{{1
 set nocompatible
 filetype off
 syntax enable
@@ -113,7 +113,7 @@ set wildignore+=*/.git/*,*/.rbx/*,*/.hg/*,*/.svn/*,*/.DS_Store
 set wildignore+=*.swp,*~,._*
 
 au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,*.ru,*.rake,*.rabl} set ft=ruby
-au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} set ft=markdown | call s:setupWrapping()
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} set ft=markdown | call s:setupWrapping(72)
 au BufRead,BufNewFile *.json set ft=javascript
 au BufRead,BufNewFile *.scss set filetype=scss
 au BufRead,BufNewFile *.vimrc.vpe set ft=vim
@@ -122,11 +122,20 @@ filetype on
 filetype indent on
 filetype plugin on
 
-function! s:setupWrapping()
+"Wrapping
+function! s:setupWrapping(width)
   set wrap
   set linebreak
-  set textwidth=72
+  echom 'set textwidth=' . a:width
+  execute 'set textwidth=' . a:width
   set nolist
+endfunction
+
+function! s:teardownWrapping()
+  set nowrap
+  set nolinebreak
+  set textwidth=0
+  set list
 endfunction
 
 " Remember last location in a file, unless it's a git commit message
@@ -134,8 +143,8 @@ au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= l
   \| exe "normal! g`\"" | endif
 
 autocmd VimResized * wincmd =
-"}}}
-" Mappings {{{
+
+" Mappings {{{1
 let mapleader=","
 
 command! W :w
@@ -171,16 +180,14 @@ map <leader>r :! ruby %<cr><cr>
 
 map <leader>N :NERDTreeToggle<cr>
 
-"}}}
-" Abbreviations {{{
+" Abbreviations {{{1
 " I can't spell or type
 abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
 abbreviate pry require 'pry'; binding.pry
 abbreviate dbg require 'debugger'; debugger
-"}}}
-" Search {{{
+" Search {{{1
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.2)<cr>
 nnoremap <silent> N   N:call HLNext(0.2)<cr>
@@ -202,24 +209,20 @@ function! HLNext (blinktime)
   call matchdelete(ring)
   redraw
 endfunction
-"}}}
-" Colour Scheme {{{
+" Colour Scheme {{{1
 set t_Co=256
 colorscheme gotham
-"}}}
-" Smeargle {{{
+" Smeargle {{{1
 let g:smeargle_colour_timeout = 1
 let g:smeargle_colouring_scheme = ''
 let g:smeargle_newline_term_colour = 22
 let g:smeargle_newline_gui_colour = '#110011'
-"}}}
-" CtrlP {{{
+" CtrlP {{{1
 let g:ctrlp_match_window_reversed = 0         " List files from top to bottom in CtrlP
 let g:ctrlp_max_height = 30                   " Set the maximum height of the match window:
 let g:ctrlp_working_path_mode = 0             " CtrlP shouldn't manage the current directory
 nnoremap <leader>s :CtrlPSimilar<cr>
-"}}}
-" Strip Trailing Whitespace {{{
+" Strip Trailing Whitespace {{{1
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -232,8 +235,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-"}}}
-" Number Toggle {{{
+" Number Toggle {{{1
 function! NumberToggle()
   if(&relativenumber == 1)
     set number
@@ -243,8 +245,7 @@ function! NumberToggle()
   endif
 endfunc
 nnoremap <C-n> :call NumberToggle()<cr>
-"}}}
-" Copy & Paste {{{
+" Copy & Paste {{{1
 "Copy and pasting into terminal
 if &term =~ "xterm.*"
     let &t_ti = &t_ti . "\e[?2004h"
@@ -259,4 +260,26 @@ if &term =~ "xterm.*"
     cmap <Esc>[200~ <nop>
     cmap <Esc>[201~ <nop>
 endif
-"}}}
+" Goyo {{{1
+function! s:goyo_enter()
+  set nowshowmode
+  set nowshowcmd
+  set scrolloff=999
+  call s:setupWrapping(72)
+  Limelight
+endfunction
+
+function s:goyo_leave()
+  set showmode
+  set showcmd
+  set scrolloff=5
+  call s:teardownWrapping()
+  Limelight!
+endfunction
+
+map <leader>g :Goyo<cr>
+
+autocmd! User GoyoEnter
+autocmd! User GoyoLeave
+autocmd  User GoyoEnter nested call <SID>goyo_enter()
+autocmd  User GoyoLeave nested call <SID>goyo_leave()
