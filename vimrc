@@ -35,7 +35,7 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
@@ -43,6 +43,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
@@ -62,6 +63,7 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'whatyouhide/vim-gotham'
 Plug 'bling/vim-airline'
 Plug 'jszakmeister/vim-togglecursor'
+Plug 'guns/vim-clojure-static'
 
 Plug 'FriedSock/smeargle'
 Plug 'FriedSock/ctrlpsimilar'
@@ -187,6 +189,7 @@ abbreviate colleciton collection
 abbreviate chloropleth choropleth
 abbreviate pry require 'pry'; binding.pry
 abbreviate dbg require 'debugger'; debugger
+abbreviate amn Eamonn Holmes
 " Search {{{1
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.2)<cr>
