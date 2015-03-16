@@ -89,7 +89,7 @@ set smarttab
 set sts=2
 set list
 set listchars=""
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\
 set listchars+=extends:>
 set listchars+=precedes:<
 set hlsearch
@@ -184,12 +184,14 @@ map <leader>N :NERDTreeToggle<cr>
 
 " Abbreviations {{{1
 " I can't spell or type
+abbreviate requore require
 abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
+abbreviate solcitor solicitor
 abbreviate pry require 'pry'; binding.pry
 abbreviate dbg require 'debugger'; debugger
-abbreviate amn Eamonn Holmes
+abbreviate emn Eamonn Holmes
 " Search {{{1
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.2)<cr>
