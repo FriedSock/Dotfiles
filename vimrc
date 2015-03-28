@@ -41,6 +41,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-cucumber'
 Plug 'vim-ruby/vim-ruby'
@@ -48,6 +49,7 @@ Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-reload'
+Plug 'vim-scripts/VimClojure'
 Plug 'trapd00r/vimpoint'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'mattn/flappyvird-vim'
@@ -178,7 +180,7 @@ map <leader>p :! pdflatex %<cr><cr>
 map <leader>g :! gnuplot %<cr><cr>
 map <leader>r :! ruby %<cr><cr>
 
-map <leader>N :NERDTreeToggle<cr>
+map <leader>n :NERDTreeToggle<cr>
 
 " Abbreviations {{{1
 " I can't spell or type

@@ -1,4 +1,5 @@
 # Path to your oh-my-zsh installation.
+#
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -51,7 +52,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/Users/jackbracewell/.rvm/gems/ruby-2.1.2/bin:/Users/jackbracewell/.rvm/gems/ruby-2.1.2@global/bin:/Users/jackbracewell/.rvm/rubies/ruby-2.1.2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/jackbracewell/.rvm/bin"
+export PATH="/Users/jackbracewell/.rvm/gems/ruby-2.1.2/bin:/Users/jackbracewell/.rvm/gems/ruby-2.1.2@global/bin:/Users/jackbracewell/.rvm/rubies/ruby-2.1.2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/jackbracewell/.rvm/bin:/usr/texbin"
+export PATH="$HOME/bin:$PATH"
 
 #bindkey -v
 
@@ -95,3 +97,5 @@ export PATH="/Users/jackbracewell/.rvm/gems/ruby-2.1.2/bin:/Users/jackbracewell/
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+export PATH=$PATH:sfdsfdsdf
