@@ -52,8 +52,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/Users/jackbracewell/.rvm/gems/ruby-2.1.2/bin:/Users/jackbracewell/.rvm/gems/ruby-2.1.2@global/bin:/Users/jackbracewell/.rvm/rubies/ruby-2.1.2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/jackbracewell/.rvm/bin:/usr/texbin"
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:/Users/jackbracewell/.rvm/gems/ruby-2.1.2/bin:/Users/jackbracewell/.rvm/gems/ruby-2.1.2@global/bin:/Users/jackbracewell/.rvm/rubies/ruby-2.1.2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/jackbracewell/.rvm/bin"
 
 #bindkey -v
 

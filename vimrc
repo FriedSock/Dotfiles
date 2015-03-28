@@ -35,7 +35,7 @@ Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
@@ -44,6 +44,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
@@ -64,6 +65,7 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'whatyouhide/vim-gotham'
 Plug 'bling/vim-airline'
 Plug 'jszakmeister/vim-togglecursor'
+Plug 'guns/vim-clojure-static'
 
 Plug 'FriedSock/smeargle'
 Plug 'FriedSock/ctrlpsimilar'
@@ -89,7 +91,7 @@ set smarttab
 set sts=2
 set list
 set listchars=""
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\
 set listchars+=extends:>
 set listchars+=precedes:<
 set hlsearch
@@ -184,11 +186,14 @@ map <leader>n :NERDTreeToggle<cr>
 
 " Abbreviations {{{1
 " I can't spell or type
+abbreviate requore require
 abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
+abbreviate solcitor solicitor
 abbreviate pry require 'pry'; binding.pry
 abbreviate dbg require 'debugger'; debugger
+abbreviate emn Eamonn Holmes
 " Search {{{1
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.2)<cr>
