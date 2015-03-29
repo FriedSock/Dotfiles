@@ -28,14 +28,17 @@ if has("gui_running")
   set guioptions -=e
 endif
 " Plugins {{{1
-call plug#begin('~/.vim/plugged')
+if has('nvim')
+  call plug#begin('~/.nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
-"Plug 'ctrlpvim/ctrlp.vim'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
@@ -45,7 +48,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-ruby/vim-ruby'
+Plug 'alexgenco/neovim-ruby'
 Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
 Plug 'xolox/vim-misc'
@@ -66,9 +69,8 @@ Plug 'whatyouhide/vim-gotham'
 Plug 'bling/vim-airline'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
+Plug 'freeo/vim-kalisi'
 
-Plug 'FriedSock/smeargle'
-Plug 'FriedSock/ctrlpsimilar'
 call plug#end()
 
 " Folding {{{1
@@ -102,7 +104,7 @@ set wildmenu
 set wildmode=list:longest,full
 set backupdir=~/.vim_backup,/tmp
 set directory=~/.vim_temp,/tmp
-set shell=/bin/bash
+set shell=/bin/zsh
 set timeoutlen=200
 set showcmd
 set scrolloff=3
@@ -218,7 +220,9 @@ function! HLNext (blinktime)
 endfunction
 " Colour Scheme {{{1
 set t_Co=256
-colorscheme gotham
+set background=dark
+colorscheme kalisi
+let g:airline_theme='kalisi'
 " Smeargle {{{1
 let g:smeargle_colour_timeout = 1
 let g:smeargle_colouring_scheme = ''
@@ -228,7 +232,7 @@ let g:smeargle_newline_gui_colour = '#110011'
 let g:ctrlp_match_window_reversed = 0         " List files from top to bottom in CtrlP
 let g:ctrlp_max_height = 30                   " Set the maximum height of the match window:
 let g:ctrlp_working_path_mode = 0             " CtrlP shouldn't manage the current directory
-nnoremap <leader>s :CtrlPSimilar<cr>
+nnoremap <leader>s :CtrlP<cr>
 " Strip Trailing Whitespace {{{1
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
@@ -290,3 +294,10 @@ autocmd! User GoyoEnter
 autocmd! User GoyoLeave
 autocmd  User GoyoEnter nested call <SID>goyo_enter()
 autocmd  User GoyoLeave nested call <SID>goyo_leave()
+
+" Neovim {{{1
+
+if has('nvim')
+  tnoremap jk <c-\><c-n>
+  nmap <BS> <C-W>h
+endif
