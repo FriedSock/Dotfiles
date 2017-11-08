@@ -21,7 +21,7 @@
 "                     ||  ||  / / ||||  |||            |||  |||
 "______.------.______/ |_/ |_/_|_/// |__| \\__________// |--( \\---------
 "                    '-' '-'       '-'    `-`          '-'    `-`
-
+"
 " GUI {{{1
 if has("gui_running")
   set guioptions -=rL
@@ -34,14 +34,17 @@ else
   call plug#begin('~/.vim/plugged')
 endif
 
+let g:loaded_rrhelper = 1
+let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
+
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
-Plug 'kien/ctrlp.vim'
-
-Plug 'altercation/vim-colors-solarized'
-Plug 'sjl/badwolf'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'ltlollo/diokai'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -49,15 +52,13 @@ Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-fugitive'
 Plug 'alexgenco/neovim-ruby'
+Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-reload'
 Plug 'vim-scripts/VimClojure'
 Plug 'trapd00r/vimpoint'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'mattn/flappyvird-vim'
-Plug 'koron/nyancat-vim'
 Plug 'uguu-org/vim-matrix-screensaver'
 Plug 'leafo/moonscript-vim'
 Plug 'junegunn/goyo.vim'
@@ -65,22 +66,34 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'whatyouhide/vim-gotham'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
-Plug 'freeo/vim-kalisi'
+Plug 'kchmck/vim-coffee-script'
+Plug 'ciaranm/inkpot'
+"Plug 'reedes/vim-colors-pencil'
+"Plug 'FriedSock/stonewashed-themes'
+"Plug 'prognostic/plasticine'
 
 call plug#end()
 
+
 " Folding {{{1
 set foldmethod=marker
+set foldlevelstart=20
+autocmd FileType vim setlocal foldmethod=marker
+autocmd FileType vim setlocal foldlevel=-1
 nnoremap <Space> za
 vnoremap <Space> za
+
+
 " Random settings {{{1
 set nocompatible
 filetype off
 syntax enable
+set regexpengine=1
+set hidden
 set number
 set ruler
 set encoding=utf-8
@@ -96,6 +109,7 @@ set listchars=""
 set listchars=tab:▸\
 set listchars+=extends:>
 set listchars+=precedes:<
+"set fillchars+=vert:🌂
 set hlsearch
 set incsearch
 set ignorecase
@@ -104,7 +118,11 @@ set wildmenu
 set wildmode=list:longest,full
 set backupdir=~/.vim_backup,/tmp
 set directory=~/.vim_temp,/tmp
-set shell=/bin/zsh
+au VimEnter set shell=/bin/bash\ --login
+
+
+set shell=/bin/bash\ --login
+set mouse=
 set timeoutlen=200
 set showcmd
 set scrolloff=3
@@ -128,20 +146,25 @@ filetype on
 filetype indent on
 filetype plugin on
 
+set clipboard+=unnamedplus
+
+set lazyredraw
+set ttyfast
+
 "Wrapping
 function! s:setupWrapping(width)
-  set wrap
-  set linebreak
-  echom 'set textwidth=' . a:width
-  execute 'set textwidth=' . a:width
-  set nolist
+  setlocal wrap
+  setlocal linebreak
+  "echom 'setlocal textwidth=' . a:width
+  execute 'setlocal textwidth=' . a:width
+  setlocal nolist
 endfunction
 
 function! s:teardownWrapping()
-  set nowrap
-  set nolinebreak
-  set textwidth=0
-  set list
+  setlocal nowrap
+  setlocal nolinebreak
+  setlocal textwidth=0
+  setlocal list
 endfunction
 
 " Remember last location in a file, unless it's a git commit message
@@ -149,6 +172,11 @@ au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= l
   \| exe "normal! g`\"" | endif
 
 autocmd VimResized * wincmd =
+
+au FileType gitcommit call s:setupWrapping(72)
+au FileType gitcommit setlocal colorcolumn=50
+"au FileType gitcommit execute 'Goyo'
+
 
 " Mappings {{{1
 let mapleader=","
@@ -176,7 +204,6 @@ noremap V v
 map <leader>v :edit $MYVIMRC<cr>
 inoremap jk <esc>
 
-
 vmap <Up> [egv
 vmap <Down> ]egv
 
@@ -193,9 +220,11 @@ abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
 abbreviate solcitor solicitor
-abbreviate pry require 'pry'; binding.pry
+abbreviate pry require 'pry'; binding.pry; hello=1
+abbreviate pdb import pdb; pdb.set_trace()
 abbreviate dbg require 'debugger'; debugger
-abbreviate emn Eamonn Holmes
+abbreviate emn "Eamonn Holmes'
+
 " Search {{{1
 " This rewires n and N to do the highlighing...
 nnoremap <silent> n   n:call HLNext(0.2)<cr>
@@ -218,11 +247,7 @@ function! HLNext (blinktime)
   call matchdelete(ring)
   redraw
 endfunction
-" Colour Scheme {{{1
-set t_Co=256
-set background=dark
-colorscheme kalisi
-let g:airline_theme='kalisi'
+
 " Smeargle {{{1
 let g:smeargle_colour_timeout = 1
 let g:smeargle_colouring_scheme = ''
@@ -230,9 +255,7 @@ let g:smeargle_newline_term_colour = 22
 let g:smeargle_newline_gui_colour = '#110011'
 " CtrlP {{{1
 let g:ctrlp_match_window_reversed = 0         " List files from top to bottom in CtrlP
-let g:ctrlp_max_height = 30                   " Set the maximum height of the match window:
-let g:ctrlp_working_path_mode = 0             " CtrlP shouldn't manage the current directory
-nnoremap <leader>s :CtrlP<cr>
+nnoremap <leader>s :FZF<cr>
 " Strip Trailing Whitespace {{{1
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
@@ -246,6 +269,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
 " Number Toggle {{{1
 function! NumberToggle()
   if(&relativenumber == 1)
@@ -273,14 +297,14 @@ if &term =~ "xterm.*"
 endif
 " Goyo {{{1
 function! s:goyo_enter()
-  set nowshowmode
-  set nowshowcmd
+  set noshowmode
+  set noshowcmd
   set scrolloff=999
   call s:setupWrapping(72)
   Limelight
 endfunction
 
-function s:goyo_leave()
+function! s:goyo_leave()
   set showmode
   set showcmd
   set scrolloff=5
@@ -288,16 +312,89 @@ function s:goyo_leave()
   Limelight!
 endfunction
 
+let g:limelight_conceal_ctermfg = 'darkgray'
+
 map <leader>g :Goyo<cr>
 
 autocmd! User GoyoEnter
 autocmd! User GoyoLeave
-autocmd  User GoyoEnter nested call <SID>goyo_enter()
-autocmd  User GoyoLeave nested call <SID>goyo_leave()
+autocmd!  User GoyoEnter nested call <SID>goyo_enter()
+autocmd!  User GoyoLeave nested call <SID>goyo_leave()
 
 " Neovim {{{1
 
 if has('nvim')
   tnoremap jk <c-\><c-n>
   nmap <BS> <C-W>h
+
+  let g:terminal_scrollback_buffer_size = 100000
 endif
+
+" Airline {{{1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+"set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+" Always show statusline
+"set laststatus=2
+" Powerline setup
+"set laststatus=2
+"set term=xterm-256color
+"set termencoding=utf-8
+"set guifont=Ubuntu\ Mono\ derivative\ Powerline:10
+" set guifont=Ubuntu\ Mono
+"let g:Powerline_symbols = 'fancy'
+
+" Neomake {{{1
+" Run NeoMake on read and write operations
+"autocmd! BufReadPost,BufWritePost * Neomake
+
+" Disable inherited syntastic
+"let g:syntastic_mode_map = {
+"  \ mode": passive",
+"  \ active_filetypes": [],
+"  \ passive_filetypes": [] }
+
+"let g:neomake_serialize = 1
+"let g:neomake_serialize_abort_on_error = 1
+"
+" Syntastic {{{1
+let g:syntastic_shell = '/bin/sh'
+
+" Colour Scheme {{{1
+set t_Co=256
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme diokai
+"set background=dark
+"colorscheme stonewashed-256
+"colorscheme plasticine
+"hi CursorLine ctermfg=00 ctermbg=00 cterm=bold
+
+

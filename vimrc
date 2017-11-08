@@ -22,6 +22,8 @@
 "______.------.______/ |_/ |_/_|_/// |__| \\__________// |--( \\---------
 "                    '-' '-'       '-'    `-`          '-'    `-`
 
+let &fillchars="diff:\u0340"
+
 " GUI {{{1
 if has("gui_running")
   set guioptions -=rL
@@ -34,11 +36,13 @@ else
   call plug#begin('~/.vim/plugged')
 endif
 
+
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'kien/ctrlp.vim'
+Plug 'FelikZ/ctrlp-py-matcher'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
@@ -48,14 +52,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rvm'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-fugitive'
-Plug 'alexgenco/neovim-ruby'
 Plug 'vim-scripts/fish-syntax'
 Plug 'chreekat/vim-paren-crosshairs'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-reload'
 Plug 'vim-scripts/VimClojure'
 Plug 'trapd00r/vimpoint'
-Plug 'ntpeters/vim-better-whitespace'
+"Plug 'ntpeters/vim-better-whitespace'
 Plug 'mattn/flappyvird-vim'
 Plug 'koron/nyancat-vim'
 Plug 'uguu-org/vim-matrix-screensaver'
@@ -70,8 +73,17 @@ Plug 'bling/vim-airline'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
 Plug 'freeo/vim-kalisi'
+Plug 'kchmck/vim-coffee-script'
+Plug 'lepture/vim-velocity'
+Plug 'elixir-lang/vim-elixir'
+
+if has('nvim')
+  Plug 'alexgenco/neovim-ruby'
+end
 
 call plug#end()
+
+
 
 " Folding {{{1
 set foldmethod=marker
@@ -194,6 +206,7 @@ abbreviate colleciton collection
 abbreviate chloropleth choropleth
 abbreviate solcitor solicitor
 abbreviate pry require 'pry'; binding.pry
+abbreviate pdb import pdb; pdb.set_trace()
 abbreviate dbg require 'debugger'; debugger
 abbreviate emn Eamonn Holmes
 " Search {{{1
@@ -220,8 +233,13 @@ function! HLNext (blinktime)
 endfunction
 " Colour Scheme {{{1
 set t_Co=256
-set background=dark
-colorscheme kalisi
+"set background=dark
+if has('nvim')
+  colorscheme inkpot
+else
+  colorscheme solarized
+end
+
 let g:airline_theme='kalisi'
 " Smeargle {{{1
 let g:smeargle_colour_timeout = 1
@@ -233,6 +251,27 @@ let g:ctrlp_match_window_reversed = 0         " List files from top to bottom in
 let g:ctrlp_max_height = 30                   " Set the maximum height of the match window:
 let g:ctrlp_working_path_mode = 0             " CtrlP shouldn't manage the current directory
 nnoremap <leader>s :CtrlP<cr>
+
+" PyMatcher for CtrlP
+if !has('python')
+  echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+  let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
+" Do not clear filenames cache, to improve CtrlP startup
+" You can manualy clear it by <F5>
+let g:ctrlp_clear_cache_on_exit = 0
+
+" Set no file limit, we are building a big project
+let g:ctrlp_max_files = 0
+
+" If ag is available use it as filename list generator instead of 'find'
+if executable("ag")
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
+endif
+
 " Strip Trailing Whitespace {{{1
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
@@ -301,3 +340,14 @@ if has('nvim')
   tnoremap jk <c-\><c-n>
   nmap <BS> <C-W>h
 endif
+
+
+" Cron {{{1
+if $VIM_CRONTAB == "true"
+    set nobackup
+    set nowritebackup
+endif
+
+
+
+

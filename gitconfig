@@ -3,13 +3,19 @@
 	default = tracking
 [user]
 	name = Jack Bracewell
-	email = jack.bracewell@unboxedconsulting.com
+	email = jbtwentythree@gmail.com
 [core]
-	editor = vim
-	excludesfile = /Users/jackbracewell/.gitignore
+	editor = nvim
+	excludesfile = /Users/jackbracewell/.gitignore_global
 [color]
 	ui = true
 [help]
 	autocorrect = 30
 [pager]
 	diff = false
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
