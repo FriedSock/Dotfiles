@@ -72,6 +72,12 @@ Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
 Plug 'kchmck/vim-coffee-script'
 Plug 'ciaranm/inkpot'
+Plug 'juanpabloaj/vim-pixelmuerto'
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+Plug 'leafgarland/typescript-vim'
+Plug 'fatih/vim-go'
+Plug 'jodosha/vim-godebug'
+Plug 'NLKNguyen/papercolor-theme'
 "Plug 'reedes/vim-colors-pencil'
 "Plug 'FriedSock/stonewashed-themes'
 "Plug 'prognostic/plasticine'
@@ -83,7 +89,7 @@ call plug#end()
 set foldmethod=marker
 set foldlevelstart=20
 autocmd FileType vim setlocal foldmethod=marker
-autocmd FileType vim setlocal foldlevel=-1
+autocmd FileType vim setlocal foldlevel=0
 nnoremap <Space> za
 vnoremap <Space> za
 
@@ -209,9 +215,18 @@ vmap <Down> ]egv
 
 map <leader>p :! pdflatex %<cr><cr>
 map <leader>g :! gnuplot %<cr><cr>
-map <leader>r :! ruby %<cr><cr>
-
 map <leader>n :NERDTreeToggle<cr>
+
+function! PasteUUID()
+  let uuid = system("GEM_PATH='/Users/jackbracewell/.gem/ruby/nothing' /usr/bin/ruby -e \"require 'securerandom'; print SecureRandom.uuid\"")
+  let command =  'i' . uuid
+  execute 'execute "normal" "' . command . '"'
+endfunction
+
+map <leader>r :call PasteUUID()<cr>
+
+" Remove whitespace
+map <leader>w :%s/\n//g<cr>
 
 " Abbreviations {{{1
 " I can't spell or type
@@ -220,7 +235,7 @@ abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
 abbreviate solcitor solicitor
-abbreviate pry require 'pry'; binding.pry; hello=1
+abbreviate pry require 'pry'; ::Kernel.binding.pry; hello=1
 abbreviate pdb import pdb; pdb.set_trace()
 abbreviate dbg require 'debugger'; debugger
 abbreviate emn "Eamonn Holmes'
@@ -269,6 +284,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
 
 " Number Toggle {{{1
 function! NumberToggle()
@@ -320,6 +336,9 @@ autocmd! User GoyoEnter
 autocmd! User GoyoLeave
 autocmd!  User GoyoEnter nested call <SID>goyo_enter()
 autocmd!  User GoyoLeave nested call <SID>goyo_leave()
+
+command! -nargs=* T bot 6split  | terminal
+map <leader>t :T<cr>i
 
 " Neovim {{{1
 
@@ -387,14 +406,21 @@ let g:airline_symbols.linenr = ''
 "
 " Syntastic {{{1
 let g:syntastic_shell = '/bin/sh'
+let g:syntastic_mode_map = { 'mode': 'active' }
+let g:syntastic_go_checkers = ['go','/Users/jackbracewell/go/src/github.com/deliveroo/rs-delivery-areas/bin/golangci-lint', 'govet', 'errcheck']
+let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_checkers = ['python']
 
 " Colour Scheme {{{1
-set t_Co=256
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme diokai
-"set background=dark
+"set t_Co=256
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme PaperColor
+set background=light
 "colorscheme stonewashed-256
 "colorscheme plasticine
 "hi CursorLine ctermfg=00 ctermbg=00 cterm=bold
 
-
+" Terminal {{{1
+augroup TerminalStuff
+  autocmd TermOpen * setlocal nonumber norelativenumber
+augroup END

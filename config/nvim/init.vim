@@ -72,6 +72,12 @@ Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
 Plug 'kchmck/vim-coffee-script'
 Plug 'ciaranm/inkpot'
+Plug 'baines/vim-colorscheme-thaumaturge'
+Plug 'lu-ren/SerialExperimentsLain'
+Plug 'juanpabloaj/vim-pixelmuerto'
+Plug 'aereal/vim-colors-japanesque'
+Plug 'hewo/vim-colorscheme-deepsea'
+Plug 'mhartington/oceanic-next'
 "Plug 'reedes/vim-colors-pencil'
 "Plug 'FriedSock/stonewashed-themes'
 "Plug 'prognostic/plasticine'
@@ -328,6 +334,10 @@ if has('nvim')
   nmap <BS> <C-W>h
 
   let g:terminal_scrollback_buffer_size = 100000
+endif
+
+if (has("termguicolors"))
+  set termguicolors
 endif
 
 " Airline {{{1
