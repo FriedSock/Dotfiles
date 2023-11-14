@@ -430,3 +430,6 @@ nnoremap <leader>u :call ExecuteAndPaste("ruby -e \"require 'securerandom'; puts
  augroup TerminalStuff
    autocmd TermOpen * setlocal nonumber norelativenumber
  augroup END
+
+command! -nargs=* T bot 6split  | terminal
+ map <leader>t :T<cr>i
