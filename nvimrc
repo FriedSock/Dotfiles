@@ -425,3 +425,8 @@ colorscheme diokai
 endfunction
 
 nnoremap <leader>u :call ExecuteAndPaste("ruby -e \"require 'securerandom'; puts SecureRandom.uuid\"")<CR>
+
+" Terminal {{{1
+ augroup TerminalStuff
+   autocmd TermOpen * setlocal nonumber norelativenumber
+ augroup END
