@@ -66,18 +66,19 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'feline-nvim/feline.nvim', { 'branch': '0.5-compat' }
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
 Plug 'kchmck/vim-coffee-script'
 Plug 'ciaranm/inkpot'
+Plug 'baines/vim-colorscheme-thaumaturge'
+Plug 'lu-ren/SerialExperimentsLain'
 Plug 'juanpabloaj/vim-pixelmuerto'
-Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-Plug 'leafgarland/typescript-vim'
-Plug 'fatih/vim-go'
-Plug 'jodosha/vim-godebug'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'aereal/vim-colors-japanesque'
+Plug 'hewo/vim-colorscheme-deepsea'
+Plug 'mhartington/oceanic-next'
 "Plug 'reedes/vim-colors-pencil'
 "Plug 'FriedSock/stonewashed-themes'
 "Plug 'prognostic/plasticine'
@@ -124,7 +125,6 @@ set wildmenu
 set wildmode=list:longest,full
 set backupdir=~/.vim_backup,/tmp
 set directory=~/.vim_temp,/tmp
-au VimEnter set shell=/bin/bash\ --login
 
 
 set shell=/bin/bash\ --login
@@ -215,27 +215,20 @@ vmap <Down> ]egv
 
 map <leader>p :! pdflatex %<cr><cr>
 map <leader>g :! gnuplot %<cr><cr>
+map <leader>r :! ruby %<cr><cr>
+
 map <leader>n :NERDTreeToggle<cr>
-
-function! PasteUUID()
-  let uuid = system("GEM_PATH='/Users/jackbracewell/.gem/ruby/nothing' /usr/bin/ruby -e \"require 'securerandom'; print SecureRandom.uuid\"")
-  let command =  'i' . uuid
-  execute 'execute "normal" "' . command . '"'
-endfunction
-
-map <leader>r :call PasteUUID()<cr>
-
-" Remove whitespace
-map <leader>w :%s/\n//g<cr>
 
 " Abbreviations {{{1
 " I can't spell or type
+"
 abbreviate requore require
+abbreviate ingore ignore
 abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
 abbreviate solcitor solicitor
-abbreviate pry require 'pry'; ::Kernel.binding.pry; hello=1
+abbreviate pry require 'pry'; binding.pry; hello=1
 abbreviate pdb import pdb; pdb.set_trace()
 abbreviate dbg require 'debugger'; debugger
 abbreviate emn "Eamonn Holmes'
@@ -284,7 +277,6 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
 
 " Number Toggle {{{1
 function! NumberToggle()
@@ -337,9 +329,6 @@ autocmd! User GoyoLeave
 autocmd!  User GoyoEnter nested call <SID>goyo_enter()
 autocmd!  User GoyoLeave nested call <SID>goyo_leave()
 
-command! -nargs=* T bot 6split  | terminal
-map <leader>t :T<cr>i
-
 " Neovim {{{1
 
 if has('nvim')
@@ -347,6 +336,10 @@ if has('nvim')
   nmap <BS> <C-W>h
 
   let g:terminal_scrollback_buffer_size = 100000
+endif
+
+if (has("termguicolors"))
+  set termguicolors
 endif
 
 " Airline {{{1
@@ -406,21 +399,29 @@ let g:airline_symbols.linenr = ''
 "
 " Syntastic {{{1
 let g:syntastic_shell = '/bin/sh'
-let g:syntastic_mode_map = { 'mode': 'active' }
-let g:syntastic_go_checkers = ['go','/Users/jackbracewell/go/src/github.com/deliveroo/rs-delivery-areas/bin/golangci-lint', 'govet', 'errcheck']
-let g:syntastic_python_python_exec = 'python3'
-let g:syntastic_python_checkers = ['python']
 
 " Colour Scheme {{{1
-"set t_Co=256
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme PaperColor
-set background=light
+set t_Co=256
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+colorscheme diokai
+"set background=dark
 "colorscheme stonewashed-256
 "colorscheme plasticine
 "hi CursorLine ctermfg=00 ctermbg=00 cterm=bold
+"
+" Paste UUID {{{1
+ function! ExecuteAndPaste(command)
+  " Save the current position
+  let save_cursor = getpos(".")
 
-" Terminal {{{1
-augroup TerminalStuff
-  autocmd TermOpen * setlocal nonumber norelativenumber
-augroup END
+  " Execute the shell command and capture the output
+  let output = system(a:command)
+
+  " Paste the output at the current cursor position
+  call setline('.', split(output, '\n'))
+
+  " Restore the cursor position
+  call setpos('.', save_cursor)
+endfunction
+
+nnoremap <leader>u :call ExecuteAndPaste("ruby -e \"require 'securerandom'; puts SecureRandom.uuid\"")<CR>
