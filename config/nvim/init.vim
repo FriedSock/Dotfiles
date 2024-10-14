@@ -27,16 +27,13 @@ if has("gui_running")
   set guioptions -=rL
   set guioptions -=e
 endif
-" Plugins {{{1
-if has('nvim')
-  call plug#begin('~/.nvim/plugged')
-else
-  call plug#begin('~/.vim/plugged')
-endif
+
+call plug#begin('~/.nvim/plugged')
 
 let g:loaded_rrhelper = 1
 let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 
+Plug 'dense-analysis/ale'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
@@ -66,8 +63,9 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vader.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'feline-nvim/feline.nvim', { 'branch': '0.5-compat' }
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'guns/vim-clojure-static'
 Plug 'kchmck/vim-coffee-script'
@@ -89,7 +87,7 @@ call plug#end()
 set foldmethod=marker
 set foldlevelstart=20
 autocmd FileType vim setlocal foldmethod=marker
-autocmd FileType vim setlocal foldlevel=-1
+autocmd FileType vim setlocal foldlevel=0
 nnoremap <Space> za
 vnoremap <Space> za
 
@@ -124,7 +122,6 @@ set wildmenu
 set wildmode=list:longest,full
 set backupdir=~/.vim_backup,/tmp
 set directory=~/.vim_temp,/tmp
-au VimEnter set shell=/bin/bash\ --login
 
 
 set shell=/bin/bash\ --login
@@ -221,7 +218,9 @@ map <leader>n :NERDTreeToggle<cr>
 
 " Abbreviations {{{1
 " I can't spell or type
+"
 abbreviate requore require
+abbreviate ingore ignore
 abbreviate recieve receive
 abbreviate colleciton collection
 abbreviate chloropleth choropleth
@@ -406,5 +405,46 @@ colorscheme diokai
 "colorscheme stonewashed-256
 "colorscheme plasticine
 "hi CursorLine ctermfg=00 ctermbg=00 cterm=bold
+"
+" Paste UUID {{{1
+ function! ExecuteAndPaste(command)
+  " Save the current position
+  let save_cursor = getpos(".")
 
+  " Execute the shell command and capture the output
+  let output = system(a:command)
 
+  " Paste the output at the current cursor position
+  call setline('.', split(output, '\n'))
+
+  " Restore the cursor position
+  call setpos('.', save_cursor)
+endfunction
+
+nnoremap <leader>u :call ExecuteAndPaste("ruby -e \"require 'securerandom'; puts SecureRandom.uuid\"")<CR>
+
+" Terminal {{{1
+ augroup TerminalStuff
+   autocmd TermOpen * setlocal nonumber norelativenumber
+ augroup END
+
+command! -nargs=* T bot 6split  | terminal
+ map <leader>t :T<cr>i
+
+" ALE {{{1
+" Disable all linters except for Ruby syntax checker
+let g:ale_linters = {
+\   'ruby': ['ruby'],
+\}
+
+" Disable all fixers
+let g:ale_fixers = {
+\   'ruby': [],
+\}
+
+" Ensure ALE only shows syntax errors
+let g:ale_ruby_ruby_executable = 'ruby'
+let g:ale_enabled = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
