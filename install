@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require "fileutils"
+
+Dir.chdir(__dir__)
+
+`git ls-files --cached --others --exclude-standard`.split("\n").each do |path|
+  next if path == "install"
+
+  source = File.expand_path(path)
+  target = File.expand_path("~/.#{path}")
+  next if File.symlink?(target) && File.readlink(target) == source
+
+  FileUtils.mkdir_p(File.dirname(target))
+  File.rename(target, "#{target}.bak") if File.exist?(target) && !File.symlink?(target)
+  FileUtils.ln_sf(source, target)
+  puts "#{target} -> #{source}"
+end

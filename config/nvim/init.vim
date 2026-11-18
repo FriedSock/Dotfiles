@@ -27,17 +27,20 @@ if has("gui_running")
   set guioptions -=rL
   set guioptions -=e
 endif
-
-call plug#begin('~/.nvim/plugged')
+" Plugins {{{1
+if has('nvim')
+  call plug#begin('~/.nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 let g:loaded_rrhelper = 1
 let g:did_install_default_menus = 1  " avoid stupid menu.vim (saves ~100ms)
 
-Plug 'dense-analysis/ale'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
-Plug 'ervandew/supertab'
+"Plug 'ervandew/supertab'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -79,9 +82,11 @@ Plug 'mhartington/oceanic-next'
 "Plug 'reedes/vim-colors-pencil'
 "Plug 'FriedSock/stonewashed-themes'
 "Plug 'prognostic/plasticine'
+Plug 'sphamba/smear-cursor.nvim'
 
 call plug#end()
 
+lua require('smear_cursor').enabled = true
 
 " Folding {{{1
 set foldmethod=marker
@@ -430,21 +435,3 @@ nnoremap <leader>u :call ExecuteAndPaste("ruby -e \"require 'securerandom'; puts
 
 command! -nargs=* T bot 6split  | terminal
  map <leader>t :T<cr>i
-
-" ALE {{{1
-" Disable all linters except for Ruby syntax checker
-let g:ale_linters = {
-\   'ruby': ['ruby'],
-\}
-
-" Disable all fixers
-let g:ale_fixers = {
-\   'ruby': [],
-\}
-
-" Ensure ALE only shows syntax errors
-let g:ale_ruby_ruby_executable = 'ruby'
-let g:ale_enabled = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
