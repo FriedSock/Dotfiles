@@ -83,10 +83,12 @@ Plug 'mhartington/oceanic-next'
 "Plug 'FriedSock/stonewashed-themes'
 "Plug 'prognostic/plasticine'
 Plug 'sphamba/smear-cursor.nvim'
+Plug 'ankushbhagats/pastel.nvim'
 
 call plug#end()
 
 lua require('smear_cursor').enabled = true
+lua require('pastel').setup()
 
 " Folding {{{1
 set foldmethod=marker
@@ -119,6 +121,7 @@ set listchars=tab:▸\
 set listchars+=extends:>
 set listchars+=precedes:<
 "set fillchars+=vert:🌂
+lua vim.opt.fillchars:append({ eob = ' ' })
 set hlsearch
 set incsearch
 set ignorecase
@@ -328,8 +331,8 @@ map <leader>g :Goyo<cr>
 
 autocmd! User GoyoEnter
 autocmd! User GoyoLeave
-autocmd!  User GoyoEnter nested call <SID>goyo_enter()
-autocmd!  User GoyoLeave nested call <SID>goyo_leave()
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Neovim {{{1
 
