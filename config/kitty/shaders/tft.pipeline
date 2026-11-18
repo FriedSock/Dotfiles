@@ -1,0 +1,5 @@
+startgroup
+    var float RESOLUTION 6.0
+    var float STRENGTH 0.6
+    shaders tft.slang
+endgroup
