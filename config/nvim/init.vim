@@ -41,8 +41,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 "Plug 'ervandew/supertab'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ltlollo/diokai'
 Plug 'tpope/vim-surround'
@@ -84,6 +82,7 @@ Plug 'mhartington/oceanic-next'
 "Plug 'prognostic/plasticine'
 Plug 'sphamba/smear-cursor.nvim'
 Plug 'ankushbhagats/pastel.nvim'
+Plug 'sainnhe/everforest'
 
 call plug#end()
 
@@ -103,7 +102,7 @@ vnoremap <Space> za
 set nocompatible
 filetype off
 syntax enable
-set regexpengine=1
+set regexpengine=0
 set hidden
 set number
 set ruler
@@ -266,8 +265,7 @@ let g:smeargle_colour_timeout = 1
 let g:smeargle_colouring_scheme = ''
 let g:smeargle_newline_term_colour = 22
 let g:smeargle_newline_gui_colour = '#110011'
-" CtrlP {{{1
-let g:ctrlp_match_window_reversed = 0         " List files from top to bottom in CtrlP
+" FZF {{{1
 nnoremap <leader>s :FZF<cr>
 " Strip Trailing Whitespace {{{1
 function! <SID>StripTrailingWhitespaces()
@@ -408,7 +406,8 @@ let g:syntastic_shell = '/bin/sh'
 " Colour Scheme {{{1
 set t_Co=256
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme diokai
+colorscheme everforest
+"colorscheme diokai
 "set background=dark
 "colorscheme stonewashed-256
 "colorscheme plasticine
